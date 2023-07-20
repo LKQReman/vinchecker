@@ -5,8 +5,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from zeep import Client
 from zeep.wsse.username import UsernameToken
+from server.config import settings
 
-client = Client('http://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken('login','password'))
+client = Client('http://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken(settings.USERNAME,settings.PASSWORD))
 templates = Jinja2Templates(directory="templates")
 
 tags_metadata = []
