@@ -40,5 +40,4 @@ async def read_item(request: Request, id: str):
 @app.post("/result", response_class=HTMLResponse)
 async def process_vin(request: Request, vin: str = Form(...)):
     result = client.service.decode(vin,"BASIC")
-    print(result)
     return templates.TemplateResponse("result.html", {"request": request, "vin": vin})
