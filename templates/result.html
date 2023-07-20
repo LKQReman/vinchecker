@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Item Details</title>
     <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <style>
         body {
@@ -28,7 +26,6 @@
             font-size: 28px;
             font-weight: bold;
             color: #1C244B;
-            /* Updated color for "Item Details" heading */
             margin-bottom: 15px;
             text-align: center;
         }
@@ -36,7 +33,6 @@
         h3 {
             font-size: 20px;
             color: #1C244B;
-            /* Updated color for "Item Details" section */
             margin: 5px 0;
         }
 
@@ -46,8 +42,7 @@
             margin-top: 20px;
         }
 
-        th,
-        td {
+        th, td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
@@ -80,7 +75,6 @@
             padding: 10px 20px;
             font-size: 16px;
             background-color: #1C244B;
-            /* Updated color for buttons */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -90,11 +84,9 @@
 
         .download-buttons button:hover {
             background-color: #0A1022;
-            /* Darker color on hover */
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Item Details</h1>
@@ -118,26 +110,29 @@
     </div>
 
     <div class="container download-buttons">
-        <button onclick="exportToExcel()">Download Excel</button>
+        <button onclick="exportToCSV()">Download CSV</button>
         <button onclick="exportToPDF()">Download PDF</button>
     </div>
 
     <script>
-        // JavaScript functions for exporting to Excel and PDF
+        // JavaScript functions for exporting to CSV and PDF
 
-        function exportToExcel() {
-            const htmlTable = document.querySelector('table');
-            const workbook = XLSX.utils.table_to_book(htmlTable);
-            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        function exportToCSV() {
+            const rows = document.querySelectorAll('table tr');
+            let csvContent = 'data:text/csv;charset=utf-8,';
 
-            // Convert to Blob and download
-            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'item_details.xlsx';
-            a.click();
-            window.URL.revokeObjectURL(url);
+            rows.forEach(row => {
+                const rowData = Array.from(row.children).map(cell => cell.innerText);
+                const csvRow = rowData.join(',');
+                csvContent += csvRow + '\r\n';
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'item_details.csv');
+            document.body.appendChild(link);
+            link.click();
         }
 
         function exportToPDF() {
@@ -147,12 +142,11 @@
                 filename: 'item_details.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
-                jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }, // Use "pt" units and "portrait" orientation
+                jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
             };
 
             html2pdf().set(options).from(element).save();
         }
     </script>
 </body>
-
 </html>
