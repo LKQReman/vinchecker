@@ -7,7 +7,6 @@ from zeep import Client
 from zeep.wsse.username import UsernameToken
 from server.config import settings
 
-client = Client('https://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken(settings.USERNAME,settings.PASSWORD))
 templates = Jinja2Templates(directory="templates")
 
 tags_metadata = []
@@ -39,12 +38,10 @@ async def read_item(request: Request, id: str):
 
 @app.post("/result", response_class=HTMLResponse)
 async def process_vin(request: Request, vin: str = Form(...)):
+    client = Client('https://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken(settings.USERNAME,settings.PASSWORD))
     result = client.service.decode(vin,"BASIC")
+    print(result)
     report = result[0]
-
-    print(report.modelYear)
-    print(report.make)
-    print(report.model)
 
     vinSpec = report.vinSpecification
     attributes = vinSpec.Item
