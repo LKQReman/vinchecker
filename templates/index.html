@@ -7,6 +7,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f2f2f2;
     }
     .container {
       display: flex;
@@ -19,25 +20,27 @@
       font-size: 48px;
       font-weight: bold;
       text-align: center;
-      width: 80%;
-      margin: 0 auto;
+      margin: 20px 0;
+      color: #007BFF;
     }
     p {
       font-size: 20px;
       text-align: center;
       margin-top: -10px;
+      color: #555;
     }
     input[type="text"] {
       width: 80%;
-      padding: 10px;
+      max-width: 500px;
+      padding: 15px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      margin-top: 20px;
+      margin-top: 30px;
     }
     input[type="submit"] {
       margin-top: 15px;
-      padding: 10px 20px;
+      padding: 15px 40px;
       font-size: 16px;
       background-color: #007BFF;
       color: #fff;
@@ -50,7 +53,7 @@
 <body>
   <div class="container">
     <h1>Get your VIN Report</h1>
-    <p>please use a valid VIN</p>
+    <p>Please use a valid VIN</p>
     <form>
       <input type="text" placeholder="Enter VIN...">
       <input type="submit" value="Submit">
