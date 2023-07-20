@@ -3,6 +3,8 @@
 <head>
     <title>Item Details</title>
     <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,10 +37,21 @@
             margin: 5px 0;
         }
 
-        ul {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
-            list-style-type: none;
-            padding: 0;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
 
         li {
@@ -51,6 +64,28 @@
             min-width: 150px;
             font-weight: bold;
         }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .download-buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .download-buttons button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -61,12 +96,55 @@
         <h3>Item Model Year: {{ model_year }}</h3>
         <h3>Item Model Make: {{ model_make }}</h3>
         <h3>Attributes:</h3>
-        <ul>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
             {% for a in attributes %}
-            <li><strong>{{ a.name }}:</strong> {{ a.value }}</li>
+            <tr>
+                <td>{{ a.name }}</td>
+                <td>{{ a.value }}</td>
+            </tr>
             {% endfor %}
-        </ul>
-    
+        </table>
     </div>
+
+    <div class="container download-buttons">
+        <button onclick="exportToExcel()">Download Excel</button>
+        <button onclick="exportToPDF()">Download PDF</button>
+    </div>
+
+    <script>
+        // JavaScript functions for exporting to Excel and PDF
+
+        function exportToExcel() {
+            const htmlTable = document.querySelector('table');
+            const workbook = XLSX.utils.table_to_book(htmlTable);
+            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+            // Convert to Blob and download
+            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'item_details.xlsx';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function exportToPDF() {
+            const element = document.querySelector('.container');
+            const options = {
+                margin: 10,
+                filename: 'item_details.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            };
+
+            html2pdf().set(options).from(element).save();
+        }
+    </script>
 </body>
 </html>
