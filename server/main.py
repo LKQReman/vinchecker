@@ -29,14 +29,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request, "csrf_token": request.csrf_token})
 
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def read_item(request: Request, id: str):
     return templates.TemplateResponse("item.html", {"request": request, "id": id})
 
-@app.post("/result")
+@app.post("/result", response_class=HTMLResponse)
 async def process_vin(request: Request, vin: str = Form(...)):
     return templates.TemplateResponse("result.html", {"request": request, "vin": vin})

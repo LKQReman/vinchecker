@@ -54,11 +54,12 @@
   <div class="container">
     <h1>Get your VIN Report</h1>
     <p>Please use a valid VIN</p>
-    <form method="post">
-        <label for="vin">Enter VIN:</label>
-        <input type="text" id="vin" name="vin" required>
-        <button type="submit">Submit</button>
-      </form>
+    <form method="post" action="/result">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="vin">Enter VIN:</label>
+      <input type="text" id="vin" name="vin" required>
+      <button type="submit">Submit</button>
+    </form>
   </div>
 </body>
 </html>
