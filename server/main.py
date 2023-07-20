@@ -1,8 +1,12 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
+from zeep import Client
+from zeep.wsse.username import UsernameToken
+
+client = Client('http://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken('login','password'))
 templates = Jinja2Templates(directory="templates")
 
 tags_metadata = []
@@ -32,3 +36,6 @@ async def read_root(request: Request,) -> dict:
 async def read_item(request: Request, id: str):
     return templates.TemplateResponse("item.html", {"request": request, "id": id})
 
+@app.post("/result")
+async def process_vin(request: Request, vin: str = Form(...)):
+    return templates.TemplateResponse("result.html", {"request": request, "vin": vin})
