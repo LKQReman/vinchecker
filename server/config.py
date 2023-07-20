@@ -3,8 +3,8 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # db settings
-    USERNAME: str
-    PASSWORD: str
+    VIN_USERNAME: str
+    VIN_PASSWORD: str
 
     class Config:
         env_file = ".env"
