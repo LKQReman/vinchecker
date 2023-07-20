@@ -143,11 +143,11 @@
         function exportToPDF() {
             const element = document.querySelector('.container');
             const options = {
-                margin: 10,
+                margin: [10, 20, 10, 20], // Top, Right, Bottom, Left margins
                 filename: 'item_details.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }, // Use "pt" units and "portrait" orientation
             };
 
             html2pdf().set(options).from(element).save();
