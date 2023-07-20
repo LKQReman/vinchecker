@@ -41,8 +41,10 @@ async def read_item(request: Request, id: str):
 
 @app.post("/result", response_class=HTMLResponse)
 async def process_vin(request: Request, vin: str = Form(...)):
+    print(settings.USERNAME)
+    print(settings.PASSWORD)
     client = Client('https://ws.vinlink.com/VLWS/services/Decoder?wsdl',
-                    wsse=UsernameToken(settings.USERNAME, settings.PASSWORD))
+                    wsse=UsernameToken("USERNAME", "PASSWORD"))
     result = client.service.decode(vin, "BASIC")
     print(result)
     report = result[0]
