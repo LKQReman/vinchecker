@@ -24,9 +24,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/", tags=["Root"])
-async def read_root() -> dict:
-    return {"message": "Humdov App Backend service!"}
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request,) -> dict:
+    return templates.TemplateResponse("item.html", {"request": request})
 
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def read_item(request: Request, id: str):
