@@ -41,15 +41,12 @@ async def read_item(request: Request, id: str):
 async def process_vin(request: Request, vin: str = Form(...)):
     result = client.service.decode(vin,"BASIC")
     report = result[0]
-    print(report.modelYear)
-    print(report.make)
-    print(report.model)
 
     data = {
         "request": request, 
         "vin": vin,
-        "model_year": report.modelYear
-        "model_make": report.make
+        "model_year": report.modelYear,
+        "model_make": report.make,
         "model": report.model
     }
     return templates.TemplateResponse("result.html", data})
