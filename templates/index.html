@@ -20,23 +20,32 @@
       font-size: 48px;
       font-weight: bold;
       text-align: center;
-      margin: 20px 0;
       color: #007BFF;
+      margin: 10px 0;
     }
     p {
       font-size: 20px;
       text-align: center;
-      margin-top: -10px;
       color: #555;
+      margin-top: -5px;
     }
-    input[type="text"] {
+    form {
       width: 80%;
       max-width: 500px;
+      margin-top: 30px;
+    }
+    label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    input[type="text"] {
+      width: 100%;
       padding: 15px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      margin-top: 30px;
+      margin-top: 5px;
     }
     input[type="submit"] {
       margin-top: 15px;
@@ -47,6 +56,10 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -54,11 +67,11 @@
   <div class="container">
     <h1>Get your VIN Report</h1>
     <p>Please use a valid VIN</p>
-    <form method="post", action="/result">
-        <label for="vin">Enter VIN:</label>
-        <input type="text" id="vin" name="vin" required>
-        <button type="submit">Submit</button>
-      </form>
+    <form method="post" action="/result">
+      <label for="vin">Enter VIN:</label>
+      <input type="text" id="vin" name="vin" required>
+      <input type="submit" value="Submit">
+    </form>
   </div>
 </body>
 </html>

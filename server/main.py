@@ -52,4 +52,4 @@ async def process_vin(request: Request, vin: str = Form(...)):
         "model_make": report.make
         "model": report.model
     }
-    return templates.TemplateResponse("result.html", })
+    return templates.TemplateResponse("result.html", data})
