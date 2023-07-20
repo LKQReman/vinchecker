@@ -34,6 +34,23 @@
             color: #333;
             margin: 5px 0;
         }
+
+        ul {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        li strong {
+            display: inline-block;
+            min-width: 150px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -43,9 +60,10 @@
         <h3>Item Model: {{ model }}</h3>
         <h3>Item Model Year: {{ model_year }}</h3>
         <h3>Item Model Make: {{ model_make }}</h3>
+        <h3>Attributes:</h3>
         <ul>
             {% for a in attributes %}
-            <li>{{ a.name }}: {{ a.value }}</li>
+            <li><strong>{{ a.name }}:</strong> {{ a.value }}</li>
             {% endfor %}
         </ul>
     
