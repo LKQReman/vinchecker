@@ -31,7 +31,7 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "csrf_token": request.csrf_token})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def read_item(request: Request, id: str):
