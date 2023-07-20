@@ -43,6 +43,12 @@
         <h3>Item Model: {{ model }}</h3>
         <h3>Item Model Year: {{ model_year }}</h3>
         <h3>Item Model Make: {{ model_make }}</h3>
+        <ul>
+            {% for a in attributes %}
+            <li>{{ a.name }}: {{ a.value }}</li>
+            {% endfor %}
+        </ul>
+    
     </div>
 </body>
 </html>

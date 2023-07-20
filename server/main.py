@@ -42,11 +42,19 @@ async def process_vin(request: Request, vin: str = Form(...)):
     result = client.service.decode(vin,"BASIC")
     report = result[0]
 
+    print(report.modelYear)
+    print(report.make)
+    print(report.model)
+
+    vinSpec = report.vinSpecification
+    attributes = vinSpec.Item
+
     data = {
         "request": request, 
         "vin": vin,
         "model_year": report.modelYear,
         "model_make": report.make,
-        "model": report.model
+        "model": report.model,
+        "attributes": attributes
     }
     return templates.TemplateResponse("result.html", data)
