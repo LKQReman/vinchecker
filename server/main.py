@@ -30,7 +30,7 @@ app.add_middleware(
 )
 
 @app.get("/", response_class=HTMLResponse)
-async def read_root(request: Request,) -> dict:
+async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/items/{id}", response_class=HTMLResponse)
