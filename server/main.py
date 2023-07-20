@@ -7,7 +7,7 @@ from zeep import Client
 from zeep.wsse.username import UsernameToken
 from server.config import settings
 
-client = Client('http://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken(settings.USERNAME,settings.PASSWORD))
+client = Client('https://ws.vinlink.com/VLWS/services/Decoder?wsdl', wsse = UsernameToken(settings.USERNAME,settings.PASSWORD))
 templates = Jinja2Templates(directory="templates")
 
 tags_metadata = []
